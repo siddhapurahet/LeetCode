@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+        
+        set s = set(nums1.begin(), nums1.end());
+        vector<int> ans;
+        
+        
+        // 4 5 5     = s
+        // 9 4 9 8 4
+        
+        for(int i=0; i<nums2.size(); i++){
+            if(s.find(nums2[i]) != s.end()){
+                ans.push_back(nums2[i]);
+                s.erase(nums2[i]);
+            }
+        }
+        return ans;
+    }
+};
