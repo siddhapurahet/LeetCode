@@ -1,0 +1,72 @@
+class Solution {
+public:
+
+    static const int MOD = 1e9 + 7;
+
+    long long power(long long a, long long b) {
+        long long ans = 1;
+
+        while (b>0) {
+            if (b&1) {
+                ans = (ans*a) % MOD;
+            }
+
+            a = (a*a) % MOD;
+            b >>= 1;
+        }
+
+        return ans;
+    }
+
+    int dfs(int root, int parent, vector<vector<int>>& graph) {
+        if(graph[root].size() == 0) return 0;
+        int ans = 0;
+        for(auto& it : graph[root]) {
+            if(it != parent) {
+                ans = max(ans, 1 + dfs(it, root, graph));
+            }
+        }
+        return ans;
+    }
+
+    int assignEdgeWeights(vector<vector<int>>& edges) {
+        
+        int edges_size = edges.size() + 2;
+        vector<vector<int>> graph(edges_size);
+
+        for(auto& itr : edges) {
+            int u = itr[0];
+            int v = itr[1];
+            graph[u].push_back(v);
+            graph[v].push_back(u);
+        }
+
+        int depth = dfs(1, -1, graph);
+        const long long MOD = 1e9 + 7;
+
+        return (int)(power(2, depth - 1));
+
+
+
+    }
+};
+
+// 1-2,3
+// 3-4,5
+
+// 1-2 (1) -> 2
+// 1-2 (2)
+
+// 1-3 (1)
+// 1-3 (2)
+
+// 1-3-4 (1,1)
+// 1-3-4 (1,2)
+
+// 1-3-4 (2,1)
+// 1-3-4 (2,2)
+
+// 1-3-5 (1,1)
+// 1-3-5 (2,2)
+// 1-3-5 (1,2)
+// 1-3-5 (2,1)
