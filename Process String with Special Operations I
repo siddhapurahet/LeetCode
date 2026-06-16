@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string processStr(string s) {
+        string ans = "";
+
+        for (int index = 0; index < s.size(); index++) {
+            if (s[index] == '*') {
+                if (!ans.empty()) {
+                    ans.pop_back();
+                }
+            } 
+            else if (s[index] == '#') {
+                ans += ans;
+            } 
+            else if (s[index] == '%') {
+                reverse(ans.begin(), ans.end());
+            } 
+            else {
+                ans += s[index];
+            }
+        }
+
+        return ans;
+    }
+};
